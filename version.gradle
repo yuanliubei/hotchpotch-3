@@ -1,0 +1,22 @@
+ext {
+    queryDslVersion = "5.0.0"
+    lombokVersion = "1.18.30"
+    commonsLang3Version = "3.12.0"
+    commonsCollections4Version = "4.4"
+    guavaVersion = "33.1.0-jre"
+    hutoolVersion = "5.8.27"
+    mapstructVersion = "1.5.0.Final"
+    openApiVersion = "2.5.0"
+
+    dependencies = [
+            "lombok"  : "org.projectlombok:lombok:${lombokVersion}",
+            "querydsl-jpa": "com.querydsl:querydsl-jpa:${queryDslVersion}",
+            "commons-lang3": "org.apache.commons:commons-lang3:${commonsLang3Version}",
+            "commons-collections4": "org.apache.commons:commons-collections4:${commonsCollections4Version}",
+            "guava": "com.google.guava:guava:${guavaVersion}",
+            "hutool": "cn.hutool:hutool-all:${hutoolVersion}",
+            "mapstruct": "org.mapstruct:mapstruct:${mapstructVersion}",
+            "mapstruct-processor": "org.mapstruct:mapstruct-processor:${mapstructVersion}",
+            "openapi-spring-webmvc-ui": "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiVersion}",
+    ]
+}
