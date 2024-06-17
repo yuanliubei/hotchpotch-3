@@ -10,8 +10,10 @@ import com.yuanliubei.hotchpotch.model.query.ShopQuery;
 import com.yuanliubei.hotchpotch.model.vo.ShopVO;
 import com.yuanliubei.hotchpotch.service.IShopService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +36,11 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(ShopUpdateDTO dto) {
+//        Shop source = shopRepository.findById(dto.getId()).get();
+//        source.setName(dto.getName());
+//        shopRepository.saveAndFlush(source);
         Shop shop = shopMapper.updateDTO2Entity(dto);
         shopRepository.dynamicUpdate(shop);
     }

@@ -14,6 +14,7 @@ import com.yuanliubei.hotchpotch.common.BaseQuery;
 import com.yuanliubei.hotchpotch.common.PageResult;
 import com.yuanliubei.hotchpotch.constant.EntityFieldConstant;
 import com.yuanliubei.hotchpotch.model.domain.BaseEntity;
+import jakarta.persistence.EntityManager;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -67,6 +68,9 @@ public interface BaseRepository<T extends BaseEntity, ID, Q extends BaseQuery<?>
         return SpringUtil.getBean(JPAQueryFactory.class);
     }
 
+    default EntityManager getEntityManager(){
+        return SpringUtil.getBean(EntityManager.class);
+    }
 
     /**
      * 执行函数方法，可读写
@@ -162,8 +166,8 @@ public interface BaseRepository<T extends BaseEntity, ID, Q extends BaseQuery<?>
     @Transactional(rollbackFor = Throwable.class)
     default void dynamicUpdate(@NonNull T obj) {
         EntityPathBase<T> entityPath = getEntityPath();
-        JPAUpdateClause update = getJPAQueryFactory()
-                .update(getEntityPath());
+
+        JPAUpdateClause update = new JPAUpdateClause(getEntityManager(), entityPath);
         Field[] fields = ReflectUtil.getFields(getDOClass());
         for (Field field : fields) {
             String fieldName = field.getName();
@@ -178,8 +182,7 @@ public interface BaseRepository<T extends BaseEntity, ID, Q extends BaseQuery<?>
         }
         NumberPath<Long> idPath = Expressions.numberPath(Long.class, entityPath, EntityFieldConstant.ID);
         //TODO 过滤未删除
-        update.set(getEntityPath(), obj)
-                .where(idPath.eq(obj.getId()))
+        update.where(idPath.eq(obj.getId()))
                 .execute();
     }
 }
