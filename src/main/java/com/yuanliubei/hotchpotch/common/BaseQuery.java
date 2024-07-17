@@ -1,12 +1,6 @@
 package com.yuanliubei.hotchpotch.common;
 
 import com.google.common.collect.Lists;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.jpa.impl.JPAQuery;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +35,7 @@ public abstract class BaseQuery<SortField extends QuerySortField> {
     protected BaseQuery.PageInfo pageInfo = new BaseQuery.PageInfo();
 
 
-    public abstract Predicate buildExample();
+    public abstract Object buildExample();
 
     public List<Sort.Order> buildOrders() {
         if (!Objects.equals(sortFields.size(), sortOrders.size())) {
@@ -64,17 +58,17 @@ public abstract class BaseQuery<SortField extends QuerySortField> {
         return orders;
     }
 
-    public <T> JPAQuery<T> withSort(JPAQuery<T> jpaQuery) {
-        for (int idx = 0; idx < sortFields.size(); idx++) {
-            SortField sortField = sortFields.get(idx);
-            Sort.Direction sortType = sortOrders.get(idx);
-            Order order = Order.valueOf(sortType.name());
-
-            Path<Object> fieldPath = Expressions.path(Object.class, sortField.getEntityPath(), sortField.getFieldName());
-            jpaQuery.orderBy(new OrderSpecifier(order, fieldPath));
-        }
-        return jpaQuery;
-    }
+//    public <T> JPAQuery<T> withSort(JPAQuery<T> jpaQuery) {
+//        for (int idx = 0; idx < sortFields.size(); idx++) {
+//            SortField sortField = sortFields.get(idx);
+//            Sort.Direction sortType = sortOrders.get(idx);
+//            Order order = Order.valueOf(sortType.name());
+//
+//            Path<Object> fieldPath = Expressions.path(Object.class, sortField.getEntityPath(), sortField.getFieldName());
+//            jpaQuery.orderBy(new OrderSpecifier(order, fieldPath));
+//        }
+//        return jpaQuery;
+//    }
 
     public void setSort(SortField field, Sort.Direction order) {
         this.sortFields = Lists.newArrayList(field);

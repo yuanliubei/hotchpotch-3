@@ -55,3 +55,11 @@ jwt:
   access-token-expiration-date: 300000
   # refresh_token过期时间(ms)
   refresh-token-expiration-date: 600000
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted # 全局逻辑删除字段名
+      logic-delete-value: 1 # 逻辑已删除值
+      logic-not-delete-value: 0 # 逻辑未删除值

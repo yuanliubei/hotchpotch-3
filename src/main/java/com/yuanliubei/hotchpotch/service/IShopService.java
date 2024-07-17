@@ -1,5 +1,6 @@
 package com.yuanliubei.hotchpotch.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanliubei.hotchpotch.common.PageResult;
 import com.yuanliubei.hotchpotch.model.dto.ShopCreateDTO;
 import com.yuanliubei.hotchpotch.model.dto.ShopUpdateDTO;
@@ -10,7 +11,7 @@ import com.yuanliubei.hotchpotch.model.vo.ShopVO;
  * @author yuanlb
  * @since 2024/6/9
  */
-public interface IShopService {
+public interface IShopService  {
 
     void create(ShopCreateDTO dto);
 

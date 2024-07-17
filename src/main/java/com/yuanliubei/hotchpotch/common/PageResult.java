@@ -19,7 +19,7 @@ public class PageResult<T> {
     private List<T> listData;
 
     // 总数据条数:查询
-    private Integer totalCount;
+    private Long totalCount;
 
     //当前页
     private Integer currentPage = 1;
@@ -39,22 +39,22 @@ public class PageResult<T> {
 
     // 如果总数据条数为0,返回一个空集
     public static <T> PageResult<T> empty(Integer pageSize) {
-        return new PageResult<>(new ArrayList<>(), 0, 1, pageSize);
+        return new PageResult<>(new ArrayList<>(), 0L, 1, pageSize);
     }
 
     public int getTotalPage() {
         return totalPage == 0 ? 1 : totalPage;
     }
 
-    public PageResult(List<T> listData, Integer totalCount, Integer currentPage,
+    public PageResult(List<T> listData, Long totalCount, Integer currentPage,
                       Integer pageSize) {
         this.listData = listData;
         this.totalCount = totalCount;
         this.currentPage = currentPage;
         this.pageSize = pageSize;
         // ----------------------------------------
-        this.totalPage = this.totalCount % this.pageSize == 0 ?
-                this.totalCount / this.pageSize : this.totalCount / this.pageSize + 1;
+        this.totalPage = (int)(this.totalCount % this.pageSize == 0 ?
+                this.totalCount / this.pageSize : this.totalCount / this.pageSize + 1);
 
         this.prevPage = Math.max(this.currentPage - 1, 1);
         this.nextPage = this.currentPage + 1 <= this.totalPage ? this.currentPage + 1
@@ -66,6 +66,6 @@ public class PageResult<T> {
         if (!page.hasContent()) {
             return PageResult.empty(page.getSize());
         }
-        return new PageResult<>(page.getContent(), (int) page.getTotalElements(), page.getPageable().getPageNumber() + 1, page.getPageable().getPageSize());
+        return new PageResult<>(page.getContent(), (long) page.getTotalElements(), page.getPageable().getPageNumber() + 1, page.getPageable().getPageSize());
     }
 }

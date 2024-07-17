@@ -1,14 +1,10 @@
 package com.yuanliubei.hotchpotch.model.domain;
 
-import com.yuanliubei.hotchpotch.config.CustomEntityAuditingListener;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -25,19 +21,46 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @CreatedBy
+    /**
+     * 创建人ID
+     */
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
-    @CreatedDate
+    /**
+     * 创建人名称
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private String createName;
+
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @LastModifiedBy
+    /**
+     * 修改人ID
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
 
-    @LastModifiedDate
+    /**
+     * 修改人名称
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private String updateName;
+
+    /**
+     * 修改删除
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    /**
+     * 是否已删除 0未删除 1已删除
+     */
+    @TableLogic
     private Boolean deleted;
-
 
 }

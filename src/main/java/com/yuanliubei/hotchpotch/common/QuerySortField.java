@@ -1,6 +1,5 @@
 package com.yuanliubei.hotchpotch.common;
 
-import com.querydsl.core.types.dsl.EntityPathBase;
 
 /**
  * @author yuanlb
@@ -10,7 +9,4 @@ public interface QuerySortField {
 
     String getFieldName();
 
-    default EntityPathBase<?> getEntityPath() {
-        return null;
-    }
 }

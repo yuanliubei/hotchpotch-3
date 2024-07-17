@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
  * @since 2024/6/9
  */
 @Mapper(config = MapStructConfig.class)
-public interface ShopMapper {
+public interface ShopConveter {
 
     Shop dto2Entity(ShopCreateDTO dto);
 
