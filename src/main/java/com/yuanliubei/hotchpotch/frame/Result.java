@@ -33,6 +33,14 @@ public class Result<T> {
         return from(CommonResultCode.ERROR_DEFAULT.getCode(), message);
     }
 
+    public static <T> Result<T> error(ResultSource resultSource) {
+        return from(resultSource.getCode(), resultSource.getMessage());
+    }
+
+    public static <T> Result<T> error(ResultSource resultSource,String msg) {
+        return from(resultSource.getCode(), msg);
+    }
+
     public static <T> Result<T> error() {
         return from(CommonResultCode.ERROR_DEFAULT);
     }

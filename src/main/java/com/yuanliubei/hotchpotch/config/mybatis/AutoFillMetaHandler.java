@@ -7,7 +7,6 @@ import com.yuanliubei.hotchpotch.utils.LoginHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -19,7 +18,7 @@ import java.util.Objects;
  */
 @Component
 @Slf4j
-public class AutoFillConfig implements MetaObjectHandler {
+public class AutoFillMetaHandler implements MetaObjectHandler {
 
     private static final String CREATE_BY = "createBy";
     private static final String CREATE_NAME = "createName";
@@ -65,14 +64,12 @@ public class AutoFillConfig implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        // 更新时间为空，则以当前时间为更新时间
         Object updateBy = getFieldValByName(UPDATE_BY, metaObject);
-        if (Objects.isNull(updateBy)) {
-            setFieldValByName(UPDATE_BY, LoginHelper.getUserId(), metaObject);
-        }
-        Object updateName = getFieldValByName(UPDATE_NAME, metaObject);
-        if (Objects.isNull(updateName)) {
-            setFieldValByName(UPDATE_NAME, LoginHelper.getUserName(), metaObject);
+        Long userId = LoginHelper.getUserId();
+        String userName = LoginHelper.getUserName();
+        if (Objects.isNull(updateBy) && Objects.nonNull(userId)) {
+            setFieldValByName(UPDATE_BY, userId, metaObject);
+            setFieldValByName(UPDATE_NAME, userName, metaObject);
         }
         Object updateTime = getFieldValByName(UPDATE_TIME, metaObject);
         if (Objects.isNull(updateTime)) {

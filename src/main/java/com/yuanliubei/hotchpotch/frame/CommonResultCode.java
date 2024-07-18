@@ -8,6 +8,8 @@ public enum CommonResultCode implements ResultSource {
 
     SUCCESS(0, "操作成功"),
 
+    NOT_FIND(404, "未找到资源"),
+
     ERROR_DEFAULT(10000, "未知错误"),
 
     ERROR_PARAM_ERROR(10101, "参数错误"),

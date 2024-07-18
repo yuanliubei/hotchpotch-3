@@ -1,6 +1,7 @@
 package com.yuanliubei.hotchpotch.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -47,9 +48,7 @@ public class ShopServiceImpl implements IShopService {
 
     @Override
     public PageResult<ShopVO> query(ShopQuery query) {
-        IPage<Shop> pageQuery = new Page<>();
-        Wrapper<Shop> wrapper = Wrappers.lambdaQuery(Shop.class);
-        IPage<Shop> pageResult = shopMapper.selectPage(pageQuery, wrapper);
+        IPage<Shop> pageResult = shopMapper.selectPage(query.toPageRequest(), query.buildExample());
         if (CollectionUtils.isEmpty(pageResult.getRecords())) {
             return PageResult.empty(query.getPageInfo().getPageSize());
         }
