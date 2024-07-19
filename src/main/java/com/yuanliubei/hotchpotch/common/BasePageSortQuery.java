@@ -38,8 +38,7 @@ public abstract class BasePageSortQuery <T extends BaseEntity> extends BasePageQ
         }
         List<OrderItem> orderItems = Lists.newArrayListWithCapacity(sortFields.size());
         for (int idx = 0; idx < sortFields.size(); idx++) {
-            String propertiesName = sortFields.get(idx);
-            String column = StringUtils.camelToUnderline(propertiesName);
+            String column = StringUtils.camelToUnderline(sortFields.get(idx));
             QuerySortOrderEnum sortOrderEnum = sortOrders.get(idx);
 
             OrderItem orderItem = QuerySortOrderEnum.ASC == sortOrderEnum ? OrderItem.asc(column) : OrderItem.desc(column);

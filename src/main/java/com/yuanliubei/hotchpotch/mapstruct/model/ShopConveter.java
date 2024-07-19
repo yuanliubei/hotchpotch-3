@@ -1,5 +1,6 @@
 package com.yuanliubei.hotchpotch.mapstruct.model;
 
+import com.yuanliubei.hotchpotch.common.PageResult;
 import com.yuanliubei.hotchpotch.mapstruct.config.MapStructConfig;
 import com.yuanliubei.hotchpotch.model.domain.Shop;
 import com.yuanliubei.hotchpotch.model.dto.ShopCreateDTO;
@@ -19,4 +20,6 @@ public interface ShopConveter {
     Shop updateDTO2Entity(ShopUpdateDTO dto);
 
     ShopVO entity2VO(Shop shop);
+
+    PageResult<ShopVO> entity2VO(PageResult<Shop> pageResult);
 }

@@ -27,6 +27,15 @@ public abstract class BasePageQuery<T extends BaseEntity> extends BaseQuery<T>
         return new Page<>(pageInfo.getPageNumber(), pageInfo.getPageSize());
     }
 
+    /**
+     * 忽略分页，
+     * FIXME：pageSize = MAX_VALUE，虽然不够优雅，先这样写
+     */
+    public final BasePageQuery<T> withoutPage(){
+        this.getPageInfo().setPageSize(Integer.MAX_VALUE);
+        return this;
+    }
+
     @Getter
     @Setter
     public static class PageInfo {

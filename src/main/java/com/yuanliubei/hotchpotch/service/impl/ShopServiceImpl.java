@@ -48,20 +48,8 @@ public class ShopServiceImpl implements IShopService {
 
     @Override
     public PageResult<ShopVO> query(ShopQuery query) {
-        IPage<Shop> pageResult = shopMapper.selectPage(query.toPageRequest(), query.buildExample());
-        if (CollectionUtils.isEmpty(pageResult.getRecords())) {
-            return PageResult.empty(query.getPageInfo().getPageSize());
-        }
-        List<ShopVO> vos = pageResult.getRecords()
-                .stream()
-                .map(shopConveter::entity2VO)
-                .collect(Collectors.toList());
-        return new PageResult<ShopVO>(
-                vos,
-                pageResult.getTotal(),
-                query.getPageInfo().getPageNumber(),
-                query.getPageInfo().getPageSize()
-        );
+        PageResult<Shop> pageResult = shopMapper.pageQuery(query);
+        return shopConveter.entity2VO(pageResult);
     }
 
     @Override
