@@ -2,6 +2,7 @@ package com.yuanliubei.hotchpotch.controller;
 
 import com.yuanliubei.hotchpotch.common.PageResult;
 import com.yuanliubei.hotchpotch.frame.Result;
+import com.yuanliubei.hotchpotch.model.domain.Shop;
 import com.yuanliubei.hotchpotch.model.dto.ShopCreateDTO;
 import com.yuanliubei.hotchpotch.model.dto.ShopUpdateDTO;
 import com.yuanliubei.hotchpotch.model.query.ShopQuery;
@@ -10,12 +11,16 @@ import com.yuanliubei.hotchpotch.service.IShopService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author yuanlb
  * @since 2024/6/9
  */
+@Slf4j
 @Tag(name = "店铺接口")
 @RequiredArgsConstructor
 @RestController
@@ -55,5 +60,11 @@ public class ShopController {
     public Result<Void> deleteByName(@RequestParam String name) {
         shopService.deleteByName(name);
         return Result.ok();
+    }
+
+    @PostMapping("/reduce")
+    public Result<Shop> reduce(@RequestParam Long shopId) throws Exception{
+        Shop shop = shopService.reduce(shopId);
+        return Result.ok(shop);
     }
 }

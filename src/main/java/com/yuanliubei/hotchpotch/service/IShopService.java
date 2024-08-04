@@ -2,6 +2,7 @@ package com.yuanliubei.hotchpotch.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuanliubei.hotchpotch.common.PageResult;
+import com.yuanliubei.hotchpotch.model.domain.Shop;
 import com.yuanliubei.hotchpotch.model.dto.ShopCreateDTO;
 import com.yuanliubei.hotchpotch.model.dto.ShopUpdateDTO;
 import com.yuanliubei.hotchpotch.model.query.ShopQuery;
@@ -22,4 +23,6 @@ public interface IShopService  {
     Boolean logicDel(Long id);
 
     void deleteByName(String name);
+
+    Shop reduce(Long shopId);
 }

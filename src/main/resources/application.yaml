@@ -18,19 +18,6 @@ spring:
     username: root
     password: a1b2c3#
 
-
-  redis:
-    host: 47.99.222.242
-    port: 6379
-    password: nideshengri
-    database: 6
-    timeout: 3s
-    lettuce:
-      pool:
-        max-wait: 5s
-        min-idle: 1
-        time-between-eviction-runs: 5m
-
   data:
     redis:
       host: 47.99.222.242

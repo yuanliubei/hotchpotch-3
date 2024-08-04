@@ -24,4 +24,6 @@ public class Shop extends BaseEntity{
 
     private String phone;
 
+    private Long amount;
+
 }

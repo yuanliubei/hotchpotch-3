@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yuanliubei.hotchpotch.common.PageResult;
+import com.yuanliubei.hotchpotch.lock.RedisLockRequire;
 import com.yuanliubei.hotchpotch.mapstruct.model.ShopConveter;
 import com.yuanliubei.hotchpotch.model.dao.ShopMapper;
 import com.yuanliubei.hotchpotch.model.domain.Shop;
@@ -62,5 +63,25 @@ public class ShopServiceImpl implements IShopService {
         Wrapper<Shop> wrapper = Wrappers.lambdaQuery(Shop.class)
                 .eq(Shop::getName, name);
         shopMapper.delete(wrapper);
+    }
+
+    @Override
+    @RedisLockRequire(
+            keyType = RedisLockRequire.KeyType.EL,
+            key = "'shop_amount_reduct_' + #shopId",
+            waitTimeInMillis = 2000,
+            lockExpireTimeInMillis = 5000,
+            lockFailMessage = "金额扣减异常，请稍后重试"
+    )
+    public Shop reduce(Long shopId) {
+        Shop shop = shopMapper.selectById(shopId);
+        shop.setAmount(shop.getAmount() - 1);
+        shopMapper.updateById(shop);
+        try {
+            Thread.sleep(1000 * 10L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return shop;
     }
 }
